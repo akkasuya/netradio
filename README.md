@@ -3,6 +3,8 @@
 Internet Radio / MP3 Player / Alarm Clock บนบอร์ด **LCDWiki ES3C28P**
 (ESP32-S3 N16R8, จอ ILI9341 240x320 + ทัช FT6336 + เสียง ES8311)
 
+![Demo](docs/demo.jpg)
+
 - ต้นฉบับ: https://github.com/cyrilrudler-create/Reveil-CYDGOLD (Arduino, LVGL 8)
 - พินอ้างอิงฝั่ง xiaozhi: `../xiaozhi-esp32/main/boards/lcdwiki-es3c28p/config.h`
   พินจอ/ทัช/I2S/I2C ตรงกับ upstream CYD-GOLD ทั้งหมด จึงใช้ `src/config.h` เดิมได้
