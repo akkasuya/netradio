@@ -2,6 +2,10 @@
 #include <SD.h>
 #include <LittleFS.h>
 #include <ArduinoJson.h>
+#include "structures.h"
+#include "Audio.h"
+
+extern Audio audio;
 
 // ===== SÉCURITÉ WEB =====
 // Changez ce mot de passe avant de flasher !
@@ -36,6 +40,7 @@ void handleRoot() {
     html += "@keyframes fadeIn {from {opacity:0;} to {opacity:1;}}";
     html += ".card{background:#1e1e1e;padding:15px;border-radius:12px;margin-bottom:20px;border:1px solid #333;}";
     html += "input[type=text],input[type=file]{background:#2a2a2a;border:1px solid #444;color:white;padding:10px;width:100%;margin:10px 0;border-radius:5px;}";
+    html += "input[type=range]{width:100%;accent-color:#d4af37;margin:10px 0;} label{font-size:0.9em;}";
     html += "table{width:100%;border-collapse:collapse;} td{padding:12px;border-bottom:1px solid #333;} .btn-del{color:#e74c3c;text-decoration:none;font-size:0.9em;}";
     
     // Ajout du bouton d'upload Gold corrigé
@@ -165,10 +170,26 @@ void handleRoot() {
     }
     html += "</ul></div></div>";
 */
+    // --- SECTION 3 : EQUALIZER (same DSP as on-screen sliders: audio.setTone) ---
+    html += "<div id='tab-eq' class='section'>";
+    html += "<div class='card'><h3>🎚️ Egaliseur (-10..+6 dB)</h3>";
+    html += "<form method='POST' action='/set_eq'>";
+    html += "<label>Basses: <b id='v-bass'>" + String(userConfig.eq_bass) + "</b> dB</label>";
+    html += "<input type='range' name='bass' min='-10' max='6' value='" + String(userConfig.eq_bass) + "' oninput=\"document.getElementById('v-bass').innerText=this.value\">";
+    html += "<label>Mediums: <b id='v-mid'>" + String(userConfig.eq_mid) + "</b> dB</label>";
+    html += "<input type='range' name='mid' min='-10' max='6' value='" + String(userConfig.eq_mid) + "' oninput=\"document.getElementById('v-mid').innerText=this.value\">";
+    html += "<label>Aigus: <b id='v-treble'>" + String(userConfig.eq_treble) + "</b> dB</label>";
+    html += "<input type='range' name='treble' min='-10' max='6' value='" + String(userConfig.eq_treble) + "' oninput=\"document.getElementById('v-treble').innerText=this.value\">";
+    html += "<input type='submit' value='Appliquer' class='btn btn-upload' style='width:100%;font-weight:bold;margin-top:10px;'>";
+    html += "</form>";
+    html += "<p style='font-size:0.8em;color:#aaa;'>Applique en temps reel (audio.setTone) et sauvegarde dans /config.bin — meme reglage que les curseurs de l'ecran.</p>";
+    html += "</div></div>";
+
     // --- NAVIGATION FIXE EN BAS ---
     html += "<div class='nav-bar'>";
     html += "<button class='nav-item active' onclick='showTab(\"tab-radio\", this)'><span>📻</span><span>RADIOS</span></button>";
     html += "<button class='nav-item' onclick='showTab(\"tab-mp3\", this)'><span>🎵</span><span>MP3</span></button>";
+    html += "<button class='nav-item' onclick='showTab(\"tab-eq\", this)'><span>🎚️</span><span>EQ</span></button>";
     html += "</div>";
 
     html += "</body></html>";
@@ -329,9 +350,24 @@ void setup_web_server() {
         }
     });    
 
+    // --- fonction equalizer : applique + sauvegarde (comme les curseurs ecran) ---
+    server.on("/set_eq", HTTP_POST, []() {
+        REQUIRE_AUTH();
+        auto clampEq = [](int v) { return v < -10 ? -10 : (v > 6 ? 6 : v); };
+        if (server.hasArg("bass"))   userConfig.eq_bass   = clampEq(server.arg("bass").toInt());
+        if (server.hasArg("mid"))    userConfig.eq_mid    = clampEq(server.arg("mid").toInt());
+        if (server.hasArg("treble")) userConfig.eq_treble = clampEq(server.arg("treble").toInt());
+        saveConfig();
+        audio.setTone(userConfig.eq_bass, userConfig.eq_mid, userConfig.eq_treble);
+        Serial.printf("EQ web: bass=%d mid=%d treble=%d\n",
+                      userConfig.eq_bass, userConfig.eq_mid, userConfig.eq_treble);
+        server.sendHeader("Location", "/");
+        server.send(303);
+    });
+
     // --- fonction reboot ---
     server.on("/reboot", []() {
-    REQUIRE_AUTH();
+        REQUIRE_AUTH();
     server.send(200, "text/html", "<html><body style='background:#1a1a1a;color:white;text-align:center;font-family:sans-serif;'><h1>Redemarrage en cours...</h1><p>L'AudioCYD-GOLD revient dans quelques secondes.</p><script>setTimeout(function(){location.href='/';}, 5000);</script></body></html>");
     delay(1000);
     ESP.restart();
