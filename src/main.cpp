@@ -627,9 +627,76 @@ void setup() {
     lv_timer_handler();
 }
 
+// =====================================================
+//  REAL SPECTRUM VISUALIZER — Goertzel 5-band on I2S PCM
+//
+//  PCM is tapped via audio_process_i2s() in spectrum.cpp
+//  (separate TU so the strong override actually links).
+//  loop() runs the Goertzel magnitudes (~every 120ms)
+//  and drives the 5 home bars with fast-attack /
+//  slow-release smoothing.
+// =====================================================
+#include "spectrum.h"
+static float spec_level[5] = {0};
+static const float SPEC_BAND_HZ[5] = {120, 400, 1100, 3000, 8000};
+static const float SPEC_BAND_W[5]  = {0.6f, 0.8f, 1.0f, 1.4f, 2.0f}; // highs are weaker — compensate
+
+// Consume one window and update the 5 home bars. Call from loop().
+static void update_spectrum_bars() {
+    int32_t win[SPEC_N];
+    if (!spectrum_fetch(win)) return;
+
+    // Silence gate + AGC: normalize window peak so bars dance at any volume
+    int32_t peak = 0;
+    for (int i = 0; i < SPEC_N; i++) {
+        int32_t a = win[i] >= 0 ? win[i] : -win[i];
+        if (a > peak) peak = a;
+    }
+    if (peak < 500) { // digital silence — let bars fall
+        for (int b = 0; b < 5; b++) {
+            spec_level[b] = fmaxf(5.0f, spec_level[b] - 2.0f);
+            if (ui_visualizer_bars != NULL && ui_visualizer_bars[b] != NULL
+                && lv_obj_is_valid(ui_visualizer_bars[b])) {
+                int h = (int)spec_level[b];
+                lv_obj_set_height(ui_visualizer_bars[b], h);
+                lv_obj_set_y(ui_visualizer_bars[b], 40 - h);
+            }
+        }
+        return;
+    }
+    float norm = 30000.0f / (float)peak;
+    float sr = (float)audio.getSampleRate();
+    if (sr <= 0) sr = 44100.0f;
+
+    for (int b = 0; b < 5; b++) {
+        float w = 2.0f * 3.14159265f * SPEC_BAND_HZ[b] / sr;
+        float coeff = 2.0f * cosf(w);
+        float s1 = 0, s2 = 0;
+        for (int n = 0; n < SPEC_N; n++) {
+            float s0 = win[n] * norm + coeff * s1 - s2;
+            s2 = s1;
+            s1 = s0;
+        }
+        float mag = sqrtf(s1 * s1 + s2 * s2 - coeff * s1 * s2) / SPEC_N;
+        float db = 20.0f * log10f(mag * SPEC_BAND_W[b] + 1.0f);
+        int target = (int)(5 + (db - 15.0f) * 0.55f);
+        if (target < 5) target = 5;
+        if (target > 35) target = 35;
+        // fast attack, slow release
+        if ((float)target > spec_level[b]) spec_level[b] = (float)target;
+        else spec_level[b] = fmaxf((float)target, spec_level[b] - 2.0f);
+
+        if (ui_visualizer_bars != NULL && ui_visualizer_bars[b] != NULL
+            && lv_obj_is_valid(ui_visualizer_bars[b])) {
+            int h = (int)spec_level[b];
+            lv_obj_set_height(ui_visualizer_bars[b], h);
+            lv_obj_set_y(ui_visualizer_bars[b], 40 - h);
+        }
+    }
+}
+
 void loop() {
-    audio.loop();
-    lv_timer_handler();
+    audio.loop();    lv_timer_handler();
     
     // ===== RECONNEXION WIFI AUTOMATIQUE =====
     static uint32_t last_wifi_check = 0;
@@ -719,26 +786,21 @@ void loop() {
         }
     }
   
-     // Audio visualizer bars animation
+     // Real spectrum visualizer (Goertzel 5-band on live I2S PCM)
     static uint32_t last_anim = 0;
     static bool bars_reset = false;
     if (is_playing && !manual_pause) {
         bars_reset = false;
-        if (millis() - last_anim > 120) { 
+        if (millis() - last_anim > 120) {
             last_anim = millis();
-            for (int i = 0; i < 5; i++) {
-                if (ui_visualizer_bars != NULL && ui_visualizer_bars[i] != NULL) {
-                    int h = random(5, 35);
-                    lv_obj_set_height(ui_visualizer_bars[i], h);
-                    lv_obj_set_y(ui_visualizer_bars[i], 40 - h); 
-                }
-            }
+            update_spectrum_bars();
         }
     } else {
 
     // Reset bars to minimum when stopped (once)
         if (!bars_reset) {
             for (int i = 0; i < 5; i++) {
+                spec_level[i] = 5;
                 if (ui_visualizer_bars != NULL && ui_visualizer_bars[i] != NULL) {
                     lv_obj_set_height(ui_visualizer_bars[i], 5);
                     lv_obj_set_y(ui_visualizer_bars[i], 35);

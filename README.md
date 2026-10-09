@@ -55,8 +55,7 @@ pio device monitor          # ดู log 115200
 1. บูต: ฟอร์แมต LittleFS, สร้าง `/config.bin`, สร้างโฟลเดอร์ SD `/mp3` `/logos`,
    คืน `buzzer.mp3` + `logos/def.bin` จาก PROGMEM, สร้าง `/radios.json` (FIP)
 2. ต่อ WiFi บนหน้าจอ (สแกน > คีย์บอร์ด > บันทึกได้หลายเครือข่าย)
-3. Web manager: `http://<ip>/` user `admin` / `cydgold`
-   **เปลี่ยนรหัสก่อนใช้จริง** (`WEB_USER`/`WEB_PASSWORD` ใน `src/web_server.cpp`)
+3. Web manager: `http://<ip>/` (เปิดโล่ง ไม่มี login — ดู `REQUIRE_AUTH()` ใน `src/web_server.cpp` ถ้าจะกลับมาใส่รหัส)
 4. เพิ่มสถานี/อัปโหลด MP3 + โลโก้ (PNG 100x100 → LVGL image converter v8,
    `CF_RGB565A8` binary) ผ่านหน้าเว็บ
 

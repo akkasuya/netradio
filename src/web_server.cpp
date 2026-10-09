@@ -8,14 +8,14 @@
 extern Audio audio;
 
 // ===== SÉCURITÉ WEB =====
-// Changez ce mot de passe avant de flasher !
+// Auth disabled — open manager. To re-enable, restore REQUIRE_AUTH()
+// to server.authenticate() + requestAuthentication() and set a
+// strong WEB_USER / WEB_PASSWORD before flashing!
 #define WEB_USER     "admin"
 #define WEB_PASSWORD "cydgold"
 
 // Macro pratique : bloque la requête si non authentifié
-#define REQUIRE_AUTH() \
-    if (!server.authenticate(WEB_USER, WEB_PASSWORD)) \
-        return server.requestAuthentication();
+#define REQUIRE_AUTH() do {} while (0)
 
 WebServer server(80);
 
