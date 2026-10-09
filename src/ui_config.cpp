@@ -20,6 +20,7 @@ extern lv_obj_t * time_label;
 extern lv_obj_t * date_label;
 extern lv_obj_t * wifi_icon_label;
 extern lv_obj_t * batt_icon_label;
+extern lv_obj_t * ip_label;
 extern lv_obj_t * ui_wifi_list;
 extern RadioTheme* currentTheme;
 
@@ -41,7 +42,7 @@ MAKE_NAV(go_info,       setup_info_screen)
 // ===== CALLBACK : RETOUR HOME =====
 static void switch_to_home_async(void * p) {
     time_label = NULL; date_label = NULL;
-    wifi_icon_label = NULL; batt_icon_label = NULL;
+    wifi_icon_label = NULL; batt_icon_label = NULL; ip_label = NULL;
     lv_obj_clean(lv_scr_act());
     setup_home_screen();
 }
@@ -182,7 +183,7 @@ static void make_slider(lv_obj_t* parent,
 void setup_config_screen() {
     lv_obj_clean(lv_scr_act());
     time_label = NULL; date_label = NULL;
-    wifi_icon_label = NULL; batt_icon_label = NULL;
+    wifi_icon_label = NULL; batt_icon_label = NULL; ip_label = NULL;
 
     lv_obj_set_style_bg_color(lv_scr_act(), currentTheme->bg_color, 0);
 
