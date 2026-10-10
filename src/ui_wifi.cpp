@@ -3,6 +3,7 @@
 #include "ui_home.h"
 #include "config.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include <WiFi.h>
 #include <Arduino.h>
 #include "structures.h"
@@ -58,7 +59,7 @@ static void update_status_bar() {
     lv_obj_clean(ui_status_bar);
 
     lv_obj_t* lbl = lv_label_create(ui_status_bar);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(lbl, ui_font(12), 0);
 
     if (WiFi.status() == WL_CONNECTED) {
         String txt = LV_SYMBOL_WIFI " S-WEB IP: " + WiFi.localIP().toString();
@@ -104,7 +105,7 @@ void refresh_saved_wifi_list() {
         lv_obj_t* lbl = lv_label_create(ui_wifi_list);
         lv_label_set_text(lbl, lang->wifi_no_saved);
         lv_obj_set_style_text_color(lbl, currentTheme->text_muted, 0);
-        lv_obj_set_style_text_font(lbl, &lv_font_montserrat_12, 0);
+        lv_obj_set_style_text_font(lbl, ui_font(12), 0);
         lv_obj_set_style_text_align(lbl, LV_TEXT_ALIGN_CENTER, 0);
         lv_obj_align(lbl, LV_ALIGN_CENTER, 0, 0);
         return;
@@ -138,7 +139,7 @@ void refresh_saved_wifi_list() {
         lv_label_set_text(ssid_lbl, userConfig.known_networks[i].ssid);
         lv_obj_set_style_text_color(ssid_lbl,
             is_connected ? lv_palette_main(LV_PALETTE_GREEN) : currentTheme->text_main, 0);
-        lv_obj_set_style_text_font(ssid_lbl, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(ssid_lbl, ui_font(14), 0);
         lv_obj_align(ssid_lbl, LV_ALIGN_LEFT_MID, 22, 0);
 
         // "Connected" badge
@@ -146,7 +147,7 @@ void refresh_saved_wifi_list() {
             lv_obj_t* badge = lv_label_create(row);
             lv_label_set_text_fmt(badge, "%s %s", LV_SYMBOL_OK, lang->wifi_connected);
             lv_obj_set_style_text_color(badge, lv_palette_main(LV_PALETTE_GREEN), 0);
-            lv_obj_set_style_text_font(badge, &lv_font_montserrat_10, 0);
+            lv_obj_set_style_text_font(badge, ui_font(10), 0);
             lv_obj_align(badge, LV_ALIGN_RIGHT_MID, -4, 0);
         }
 
@@ -224,13 +225,13 @@ void start_wifi_scan() {
             lv_label_set_long_mode(ssid_lbl, LV_LABEL_LONG_CLIP);
             lv_obj_set_width(ssid_lbl, 160);
             lv_obj_set_style_text_color(ssid_lbl, currentTheme->text_main, 0);
-            lv_obj_set_style_text_font(ssid_lbl, &lv_font_montserrat_14, 0);
+            lv_obj_set_style_text_font(ssid_lbl, ui_font(14), 0);
             lv_obj_align(ssid_lbl, LV_ALIGN_LEFT_MID, 22, 0);
 
             lv_obj_t* rssi_lbl = lv_label_create(row);
             lv_label_set_text_fmt(rssi_lbl, "%d dBm", rssi);
             lv_obj_set_style_text_color(rssi_lbl, sig_color, 0);
-            lv_obj_set_style_text_font(rssi_lbl, &lv_font_montserrat_10, 0);
+            lv_obj_set_style_text_font(rssi_lbl, ui_font(10), 0);
             lv_obj_align(rssi_lbl, LV_ALIGN_RIGHT_MID, -4, 0);
 
             // Store SSID pointer for the tap callback
@@ -353,7 +354,7 @@ void setup_wifi_screen() {
     }, LV_EVENT_CLICKED, NULL);
     lv_obj_t* lbl_scan = lv_label_create(btn_scan);
     lv_label_set_text_fmt(lbl_scan, "%s  %s", LV_SYMBOL_REFRESH, lang->wifi_scan);
-    lv_obj_set_style_text_font(lbl_scan, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(lbl_scan, ui_font(12), 0);
     lv_obj_center(lbl_scan);
 
     ui_status_bar = lv_obj_create(footer);
@@ -385,7 +386,7 @@ void setup_wifi_screen() {
     lv_obj_t* sec_title = lv_label_create(ui_main_panel);
     lv_label_set_text(sec_title, lang->wifi_saved);
     lv_obj_set_style_text_color(sec_title, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(sec_title, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(sec_title, ui_font(10), 0);
     lv_obj_set_style_pad_left(sec_title, 8, 0);
     lv_obj_set_style_pad_top(sec_title, 4, 0);
 
@@ -421,7 +422,7 @@ void setup_wifi_screen() {
     lv_obj_t* scan_title = lv_label_create(scan_hdr);
     lv_label_set_text(scan_title, lang->wifi_available);
     lv_obj_set_style_text_color(scan_title, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(scan_title, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(scan_title, ui_font(10), 0);
     lv_obj_align(scan_title, LV_ALIGN_LEFT_MID, 4, 0);
 
     lv_obj_t* btn_scan_back = lv_btn_create(scan_hdr);
@@ -435,7 +436,7 @@ void setup_wifi_screen() {
     lv_obj_t* lbl_sb = lv_label_create(btn_scan_back);
     lv_label_set_text_fmt(lbl_sb, "%s %s", LV_SYMBOL_LEFT, lang->wifi_back);
     lv_obj_set_style_text_color(lbl_sb, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(lbl_sb, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(lbl_sb, ui_font(10), 0);
     lv_obj_center(lbl_sb);
 
     ui_scan_list = lv_obj_create(ui_scan_panel);
@@ -473,7 +474,7 @@ void setup_wifi_screen() {
     ui_pwd_ssid_lbl = lv_label_create(pwd_hdr);
     lv_label_set_text(ui_pwd_ssid_lbl, LV_SYMBOL_WIFI "  ...");
     lv_obj_set_style_text_color(ui_pwd_ssid_lbl, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(ui_pwd_ssid_lbl, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(ui_pwd_ssid_lbl, ui_font(14), 0);
     lv_obj_align(ui_pwd_ssid_lbl, LV_ALIGN_LEFT_MID, 4, 0);
 
     lv_obj_t* btn_pwd_cancel = lv_btn_create(pwd_hdr);
@@ -489,7 +490,7 @@ void setup_wifi_screen() {
     lv_obj_t* lbl_cancel = lv_label_create(btn_pwd_cancel);
     lv_label_set_text_fmt(lbl_cancel, "%s %s", LV_SYMBOL_LEFT, lang->wifi_back);
     lv_obj_set_style_text_color(lbl_cancel, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(lbl_cancel, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(lbl_cancel, ui_font(10), 0);
     lv_obj_center(lbl_cancel);
 
     // Password text area (y=42, h=34)
@@ -506,7 +507,7 @@ void setup_wifi_screen() {
     lv_obj_set_style_radius(ui_pwd_ta, 6, 0);
     lv_obj_set_style_pad_ver(ui_pwd_ta, 6, 0);
     lv_obj_set_style_pad_hor(ui_pwd_ta, 8, 0);
-    lv_obj_set_style_text_font(ui_pwd_ta, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(ui_pwd_ta, ui_font(14), 0);
 
     // Show/hide password toggle button (eye icon)
     lv_obj_t* btn_eye = lv_btn_create(ui_pwd_panel);

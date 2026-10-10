@@ -5,6 +5,7 @@
 #include "fonctions.h"
 #include "Audio.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include <WiFi.h>
 #include "ui_lang.h"
 
@@ -126,13 +127,13 @@ static lv_obj_t* make_nav_btn(const char* icon, const char* label,
 
     lv_obj_t* ico = lv_label_create(btn);
     lv_label_set_text(ico, icon);
-    lv_obj_set_style_text_font(ico, &lv_font_montserrat_24, 0);
+    lv_obj_set_style_text_font(ico, ui_font(24), 0);
     lv_obj_set_style_text_color(ico, currentTheme->text_main, 0);
     lv_obj_align(ico, LV_ALIGN_TOP_MID, 0, 2);
 
     lv_obj_t* lbl = lv_label_create(btn);
     lv_label_set_text(lbl, label);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl, ui_font(14), 0);
     lv_obj_set_style_text_color(lbl, currentTheme->text_main, 0);
     lv_obj_align(lbl, LV_ALIGN_BOTTOM_MID, 0, -2);
 
@@ -171,14 +172,14 @@ void setup_home_screen() {
         ui_alarm_icon = lv_label_create(lv_scr_act());
         lv_label_set_text(ui_alarm_icon, LV_SYMBOL_BELL);
         lv_obj_set_style_text_color(ui_alarm_icon, currentTheme->primary, 0);
-        lv_obj_set_style_text_font(ui_alarm_icon, &lv_font_montserrat_32, 0);
+        lv_obj_set_style_text_font(ui_alarm_icon, ui_font(32), 0);
         lv_obj_align_to(ui_alarm_icon, time_label, LV_ALIGN_OUT_RIGHT_MID, 10, -15);
         lv_obj_set_style_text_opa(ui_alarm_icon, LV_OPA_80, 0);
 
         lv_obj_t* alarm_time = lv_label_create(lv_scr_act());
         lv_label_set_text_fmt(alarm_time, "%02d:%02d", userConfig.alarm_h, userConfig.alarm_m);
         lv_obj_set_style_text_color(alarm_time, currentTheme->text_muted, 0);
-        lv_obj_set_style_text_font(alarm_time, &lv_font_montserrat_10, 0);
+        lv_obj_set_style_text_font(alarm_time, ui_font(10), 0);
         lv_obj_align_to(alarm_time, ui_alarm_icon, LV_ALIGN_OUT_BOTTOM_MID, 0, 5);
     } else {
         ui_alarm_icon = NULL;
@@ -186,14 +187,14 @@ void setup_home_screen() {
 
     // --- Date label (top left) ---
     date_label = lv_label_create(lv_scr_act());
-    lv_obj_set_style_text_font(date_label, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_font(date_label, ui_font(18), 0);
     lv_obj_set_style_text_color(date_label, currentTheme->text_main, 0);
     lv_label_set_text(date_label, "...");
     lv_obj_align(date_label, LV_ALIGN_TOP_LEFT, 7, 7);
 
     // --- WiFi icon (top left, below date) ---
     wifi_icon_label = lv_label_create(lv_scr_act());
-    lv_obj_set_style_text_font(wifi_icon_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(wifi_icon_label, ui_font(14), 0);
     lv_obj_align(wifi_icon_label, LV_ALIGN_TOP_LEFT, 7, 30);
     if (WiFi.status() == WL_CONNECTED) {
         lv_label_set_text(wifi_icon_label, LV_SYMBOL_WIFI);
@@ -205,14 +206,14 @@ void setup_home_screen() {
 
     // --- Battery icon ---
     batt_icon_label = lv_label_create(lv_scr_act());
-    lv_obj_set_style_text_font(batt_icon_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(batt_icon_label, ui_font(14), 0);
     lv_obj_set_style_text_color(batt_icon_label, currentTheme->text_main, 0);
     lv_obj_align(batt_icon_label, LV_ALIGN_TOP_LEFT, 35, 30);
     lv_label_set_text(batt_icon_label, LV_SYMBOL_BATTERY_FULL);
 
     // --- IP address (right of battery, refreshed by update_time) ---
     ip_label = lv_label_create(lv_scr_act());
-    lv_obj_set_style_text_font(ip_label, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(ip_label, ui_font(10), 0);
     lv_obj_set_style_text_color(ip_label, currentTheme->text_muted, 0);
     lv_obj_align(ip_label, LV_ALIGN_TOP_LEFT, 62, 32);
     if (WiFi.status() == WL_CONNECTED)
@@ -245,17 +246,17 @@ void setup_home_screen() {
 
     lv_obj_t* icn_stop = lv_label_create(btn_stop);
     lv_label_set_text(icn_stop, LV_SYMBOL_STOP);
-    lv_obj_set_style_text_font(icn_stop, &lv_font_montserrat_24, 0);
+    lv_obj_set_style_text_font(icn_stop, ui_font(24), 0);
     lv_obj_align(icn_stop, LV_ALIGN_TOP_MID, 0, 2);
 
     lv_obj_t* txt_stop = lv_label_create(btn_stop);
     lv_label_set_text(txt_stop, "STOP");
-    lv_obj_set_style_text_font(txt_stop, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(txt_stop, ui_font(14), 0);
     lv_obj_align(txt_stop, LV_ALIGN_BOTTOM_MID, 0, -2);
 
     // --- Now playing label ---
     now_playing_label = lv_label_create(lv_scr_act());
-    lv_obj_set_style_text_font(now_playing_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(now_playing_label, ui_font(14), 0);
     lv_obj_set_style_text_color(now_playing_label, currentTheme->text_muted, 0);
     lv_label_set_text(now_playing_label,
         (is_playing && current_title != "") ? current_title.c_str() : "No playback");

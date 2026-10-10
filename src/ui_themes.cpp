@@ -2,6 +2,7 @@
 #include "ui_config.h"
 #include "structures.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include "ui_lang.h"
 
 // =====================================================
@@ -201,7 +202,7 @@ void setup_themes_screen() {
         lv_obj_t* name_lbl = lv_label_create(theme_cards[i]);
         lv_label_set_text(name_lbl, theme_names[i]);
         lv_obj_set_style_text_color(name_lbl, th->text_main, 0);
-        lv_obj_set_style_text_font(name_lbl, &lv_font_montserrat_10, 0);
+        lv_obj_set_style_text_font(name_lbl, ui_font(10), 0);
         lv_obj_align(name_lbl, LV_ALIGN_BOTTOM_MID, 0, 0);
         lv_obj_clear_flag(name_lbl, LV_OBJ_FLAG_CLICKABLE);
     }

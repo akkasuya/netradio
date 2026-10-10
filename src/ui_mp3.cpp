@@ -2,6 +2,7 @@
 #include "config.h"
 #include "Audio.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include <SD.h>
 #include "structures.h"
 #include "ui_lang.h"
@@ -235,12 +236,12 @@ void setup_mp3_screen() {
     lv_obj_t* ico = lv_label_create(title_bar);
     lv_label_set_text(ico, LV_SYMBOL_AUDIO);
     lv_obj_set_style_text_color(ico, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(ico, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(ico, ui_font(14), 0);
     lv_obj_set_pos(ico, 8, 12);
 
     ui_lbl_title = lv_label_create(title_bar);
     lv_label_set_text(ui_lbl_title, lang->mp3_select_file);
-    lv_obj_set_style_text_font(ui_lbl_title, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(ui_lbl_title, ui_font(14), 0);
     lv_obj_set_style_text_color(ui_lbl_title, currentTheme->text_main, 0);
     lv_obj_set_width(ui_lbl_title, 270);
     lv_label_set_long_mode(ui_lbl_title, LV_LABEL_LONG_SCROLL_CIRCULAR);
@@ -266,7 +267,7 @@ void setup_mp3_screen() {
     lv_obj_set_style_border_color(ui_mp3_list, currentTheme->border, 0);
     lv_obj_set_style_bg_color(ui_mp3_list, currentTheme->btn_core, 0);
     lv_obj_set_style_text_color(ui_mp3_list, currentTheme->text_main, 0);
-    lv_obj_set_style_text_font(ui_mp3_list, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(ui_mp3_list, ui_font(12), 0);
     lv_obj_set_style_pad_row(ui_mp3_list, 2, 0);
 
     // Scan /mp3 on SD
@@ -343,7 +344,7 @@ void setup_mp3_screen() {
         lv_obj_set_style_shadow_width(btn, 0, 0);
         lv_obj_t* lbl = lv_label_create(btn);
         lv_label_set_text(lbl, icon);
-        lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(lbl, ui_font(14), 0);
         lv_obj_set_style_text_color(lbl, currentTheme->text_main, 0);
         lv_obj_center(lbl);
         return btn;

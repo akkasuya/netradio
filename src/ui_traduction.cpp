@@ -3,6 +3,7 @@
 #include "structures.h"
 #include "ui_config.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include <Arduino.h>
 
 extern RadioTheme* currentTheme;
@@ -92,7 +93,7 @@ void setup_traduction_screen() {
     lv_obj_t* sub = lv_label_create(header);
     lv_label_set_text(sub, lang->lang_name);
     lv_obj_set_style_text_color(sub, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(sub, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(sub, ui_font(10), 0);
     lv_obj_align(sub, LV_ALIGN_BOTTOM_LEFT, 6, -2);
 
     // Confirm button

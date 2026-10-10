@@ -2,6 +2,7 @@
 #include "structures.h"
 #include "ui_config.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include <Arduino.h>
 #include "ui_lang.h"
 
@@ -177,7 +178,7 @@ void setup_pays_screen() {
     ui_sel_label = lv_label_create(header);
     lv_label_set_text_fmt(ui_sel_label, ">> %s", timezone_list[current_idx].name);
     lv_obj_set_style_text_color(ui_sel_label, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(ui_sel_label, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(ui_sel_label, ui_font(12), 0);
     lv_label_set_long_mode(ui_sel_label, LV_LABEL_LONG_SCROLL_CIRCULAR);
     lv_obj_set_width(ui_sel_label, 220);
     lv_obj_align(ui_sel_label, LV_ALIGN_BOTTOM_LEFT, 4, -2);
@@ -219,7 +220,7 @@ void setup_pays_screen() {
             lv_label_set_text(region_lbl, last_region);
             lv_obj_set_width(region_lbl, 310);
             lv_obj_set_style_text_color(region_lbl, currentTheme->text_muted, 0);
-            lv_obj_set_style_text_font(region_lbl, &lv_font_montserrat_12, 0);
+            lv_obj_set_style_text_font(region_lbl, ui_font(12), 0);
             lv_obj_set_style_pad_top(region_lbl, 4, 0);
             lv_obj_set_style_pad_left(region_lbl, 6, 0);
             lv_obj_set_user_data(region_lbl, (void*)(intptr_t)-1);
@@ -242,7 +243,7 @@ void setup_pays_screen() {
         lv_label_set_long_mode(lbl, LV_LABEL_LONG_CLIP);
         lv_obj_set_width(lbl, 290);
         lv_obj_set_style_text_color(lbl, currentTheme->text_main, 0);
-        lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(lbl, ui_font(14), 0);
         lv_obj_align(lbl, LV_ALIGN_LEFT_MID, 0, 0);
     }
 

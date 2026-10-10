@@ -9,6 +9,7 @@
 #include "ui_info.h"
 #include "config.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include <WiFi.h>
 #include "Audio.h"
 #include <Arduino.h>
@@ -102,14 +103,14 @@ static lv_obj_t* make_menu_btn(lv_obj_t* parent,
     // Icon
     lv_obj_t* ico = lv_label_create(btn);
     lv_label_set_text(ico, symbol);
-    lv_obj_set_style_text_font(ico, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(ico, ui_font(20), 0);
     lv_obj_set_style_text_color(ico, icon_color, 0);
     lv_obj_align(ico, LV_ALIGN_TOP_MID, 0, 8);
 
     // Label below icon
     lv_obj_t* lbl = lv_label_create(btn);
     lv_label_set_text(lbl, label_txt);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(lbl, ui_font(10), 0);
     lv_obj_set_style_text_color(lbl, active ? currentTheme->primary : currentTheme->text_muted, 0);
     lv_obj_align(lbl, LV_ALIGN_BOTTOM_MID, 0, -6);
 
@@ -141,14 +142,14 @@ static void make_slider(lv_obj_t* parent,
     lv_obj_t* ico = lv_label_create(row);
     lv_label_set_text(ico, icon);
     lv_obj_set_style_text_color(ico, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(ico, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(ico, ui_font(14), 0);
     lv_obj_align(ico, LV_ALIGN_LEFT_MID, 6, 0);
 
     // Label
     lv_obj_t* lbl = lv_label_create(row);
     lv_label_set_text(lbl, lbl_txt);
     lv_obj_set_style_text_color(lbl, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(lbl, ui_font(10), 0);
     lv_obj_align(lbl, LV_ALIGN_LEFT_MID, 24, 0);
 
     // Slider — slightly shorter to avoid the right edge of the enclosure
@@ -209,7 +210,7 @@ void setup_config_screen() {
     lv_obj_t* title = lv_label_create(header);
     lv_label_set_text_fmt(title, "%s  %s", LV_SYMBOL_SETTINGS, lang->config_title);
     lv_obj_set_style_text_color(title, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(title, ui_font(14), 0);
     lv_obj_align(title, LV_ALIGN_LEFT_MID, 4, 0);
 
     // Home button (top right)

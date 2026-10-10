@@ -2,6 +2,7 @@
 #include "config.h"
 #include "Audio.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include "structures.h"
 #include "fonctions.h"
 #include "ui_lang.h"
@@ -174,21 +175,21 @@ void setup_radio_screen() {
     lv_obj_t* ico = lv_label_create(top_bar);
     lv_label_set_text(ico, LV_SYMBOL_WIFI);
     lv_obj_set_style_text_color(ico, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(ico, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(ico, ui_font(14), 0);
     lv_obj_set_pos(ico, 8, 10);
 
     // Screen title
     lv_obj_t* lbl_radio = lv_label_create(top_bar);
     lv_label_set_text(lbl_radio, lang->radio_title);
     lv_obj_set_style_text_color(lbl_radio, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(lbl_radio, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_radio, ui_font(14), 0);
     lv_obj_set_pos(lbl_radio, 26, 10);
 
     // Clock (updated externally via update_radio_time)
     time_label = lv_label_create(top_bar);
     lv_label_set_text(time_label, "--:--");
     lv_obj_set_style_text_color(time_label, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(time_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(time_label, ui_font(14), 0);
     lv_obj_set_pos(time_label, 270, 10);
 
     // --- Stream title bar (22px, scrolling) ---
@@ -205,7 +206,7 @@ void setup_radio_screen() {
     lv_label_set_text(ui_lbl_stream_title,
         (!STATIONS.empty()) ? STATIONS[currentStation].name.c_str() : "...");
     lv_obj_set_style_text_color(ui_lbl_stream_title, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(ui_lbl_stream_title, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(ui_lbl_stream_title, ui_font(12), 0);
     lv_obj_set_width(ui_lbl_stream_title, 310);
     lv_label_set_long_mode(ui_lbl_stream_title, LV_LABEL_LONG_SCROLL_CIRCULAR);
     lv_obj_set_pos(ui_lbl_stream_title, 5, 4);
@@ -227,7 +228,7 @@ void setup_radio_screen() {
     lv_obj_set_style_border_color(ui_station_list, currentTheme->border, 0);
     lv_obj_set_style_bg_color(ui_station_list, currentTheme->btn_core, 0);
     lv_obj_set_style_text_color(ui_station_list, currentTheme->text_main, 0);
-    lv_obj_set_style_text_font(ui_station_list, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(ui_station_list, ui_font(12), 0);
     lv_obj_set_style_pad_row(ui_station_list, 2, 0);
 
     for (int i = 0; i < (int)STATIONS.size(); i++) {
@@ -255,7 +256,7 @@ void setup_radio_screen() {
     lv_label_set_text(ui_lbl_station_name,
         (!STATIONS.empty()) ? STATIONS[currentStation].name.c_str() : "");
     lv_obj_set_style_text_color(ui_lbl_station_name, currentTheme->text_main, 0);
-    lv_obj_set_style_text_font(ui_lbl_station_name, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(ui_lbl_station_name, ui_font(12), 0);
     lv_obj_set_width(ui_lbl_station_name, 112);
     lv_label_set_long_mode(ui_lbl_station_name, LV_LABEL_LONG_DOT);
     lv_obj_set_style_text_align(ui_lbl_station_name, LV_TEXT_ALIGN_CENTER, 0);
@@ -273,7 +274,7 @@ void setup_radio_screen() {
     lv_obj_t* lbl_back = lv_label_create(btn_back);
     lv_label_set_text(lbl_back, LV_SYMBOL_HOME);
     lv_obj_set_style_text_color(lbl_back, currentTheme->text_main, 0);
-    lv_obj_set_style_text_font(lbl_back, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_back, ui_font(14), 0);
     lv_obj_center(lbl_back);
 
     audio.setVolume(userConfig.volsound);

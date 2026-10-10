@@ -2,6 +2,7 @@
 #include "ui_config.h"
 #include "structures.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include <WiFi.h>
 #include <SD.h>
 #include <Arduino.h>
@@ -150,7 +151,7 @@ void setup_info_screen() {
     // --- Copyright ---
     lv_obj_t* lbl_copy = lv_label_create(lv_scr_act());
     lv_label_set_text(lbl_copy, "(c) C-R Tech 2026");
-    lv_obj_set_style_text_font(lbl_copy, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_copy, ui_font(14), 0);
     lv_obj_set_style_text_color(lbl_copy, lv_palette_main(LV_PALETTE_GREY), 0);
     lv_obj_align(lbl_copy, LV_ALIGN_BOTTOM_LEFT, 15, -20);
 

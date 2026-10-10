@@ -2,6 +2,7 @@
 #include "ui_config.h"
 #include "structures.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include "Audio.h"
 #include "ui_lang.h"
 
@@ -143,7 +144,7 @@ void setup_equalizer_screen() {
     lv_obj_t* lbl_reset = lv_label_create(btn_reset);
     lv_label_set_text(lbl_reset, "Reset");
     lv_obj_set_style_text_color(lbl_reset, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(lbl_reset, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(lbl_reset, ui_font(12), 0);
     lv_obj_center(lbl_reset);
 
     // --- dB reference lines ---
@@ -170,7 +171,7 @@ void setup_equalizer_screen() {
         lv_obj_t* lbl = lv_label_create(lv_scr_act());
         lv_label_set_text(lbl, txt);
         lv_obj_set_style_text_color(lbl, color, 0);
-        lv_obj_set_style_text_font(lbl, &lv_font_montserrat_10, 0);
+        lv_obj_set_style_text_font(lbl, ui_font(10), 0);
         lv_obj_set_pos(lbl, x, y);
     };
 
@@ -214,7 +215,7 @@ void setup_equalizer_screen() {
         lv_obj_t* lbl_init = lv_label_create(lv_scr_act());
         lv_label_set_text(lbl_init, initials[i]);
         lv_obj_set_style_text_color(lbl_init, currentTheme->text_muted, 0);
-        lv_obj_set_style_text_font(lbl_init, &lv_font_montserrat_10, 0);
+        lv_obj_set_style_text_font(lbl_init, ui_font(10), 0);
         lv_obj_set_pos(lbl_init, sl_x[i] - 4, SL_TOP - 14);
 
         // dB value below slider (green/red/muted)
@@ -225,14 +226,14 @@ void setup_equalizer_screen() {
                            (val < 0) ? lv_palette_main(LV_PALETTE_RED)   :
                                         currentTheme->text_muted;
         lv_obj_set_style_text_color(lbl_values[i], col_v, 0);
-        lv_obj_set_style_text_font(lbl_values[i], &lv_font_montserrat_12, 0);
+        lv_obj_set_style_text_font(lbl_values[i], ui_font(12), 0);
         lv_obj_set_pos(lbl_values[i], sl_x[i] - 8, SL_BOTTOM + 6);
 
         // Band name below value
         lv_obj_t* lbl_name = lv_label_create(lv_scr_act());
         lv_label_set_text(lbl_name, names[i]);
         lv_obj_set_style_text_color(lbl_name, currentTheme->text_muted, 0);
-        lv_obj_set_style_text_font(lbl_name, &lv_font_montserrat_10, 0);
+        lv_obj_set_style_text_font(lbl_name, ui_font(10), 0);
         lv_obj_set_pos(lbl_name, sl_x[i] - 22, SL_BOTTOM + 22);
     }
 }

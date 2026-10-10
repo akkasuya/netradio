@@ -3,6 +3,7 @@
 #include "ui_alarme.h"
 #include "config.h"
 #include <lvgl.h>
+#include "thai_fonts.h"
 #include "Audio.h"
 #include <Arduino.h>
 #include <LittleFS.h>
@@ -117,7 +118,7 @@ static void style_roller(lv_obj_t* obj) {
     lv_obj_set_style_text_color(obj, currentTheme->text_main, 0);
     lv_obj_set_style_border_width(obj, 1, 0);
     lv_obj_set_style_border_color(obj, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(obj, ui_font(14), 0);
     lv_obj_set_style_radius(obj, 6, 0);
     lv_obj_set_style_bg_color(obj, currentTheme->primary,  LV_PART_SELECTED);
     lv_obj_set_style_text_color(obj, currentTheme->bg_color, LV_PART_SELECTED);
@@ -232,7 +233,7 @@ void setup_alarme_screen() {
     lv_obj_t* title = lv_label_create(top_bar);
     lv_label_set_text_fmt(title, "%s %s", LV_SYMBOL_BELL, lang->alarm_title);
     lv_obj_set_style_text_color(title, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(title, ui_font(14), 0);
     lv_obj_center(title);
 
     lv_obj_t* sep = lv_obj_create(lv_scr_act());
@@ -246,7 +247,7 @@ void setup_alarme_screen() {
     lv_obj_t* lbl_h = lv_label_create(lv_scr_act());
     lv_label_set_text(lbl_h, "H");
     lv_obj_set_style_text_color(lbl_h, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(lbl_h, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(lbl_h, ui_font(12), 0);
     lv_obj_set_pos(lbl_h, 18, 38);
 
     roller_h = lv_roller_create(lv_scr_act());
@@ -264,13 +265,13 @@ void setup_alarme_screen() {
     lv_obj_t* lbl_sep = lv_label_create(lv_scr_act());
     lv_label_set_text(lbl_sep, ":");
     lv_obj_set_style_text_color(lbl_sep, currentTheme->primary, 0);
-    lv_obj_set_style_text_font(lbl_sep, &lv_font_montserrat_24, 0);
+    lv_obj_set_style_text_font(lbl_sep, ui_font(24), 0);
     lv_obj_set_pos(lbl_sep, 61, 88);
 
     lv_obj_t* lbl_m = lv_label_create(lv_scr_act());
     lv_label_set_text(lbl_m, "M");
     lv_obj_set_style_text_color(lbl_m, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(lbl_m, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(lbl_m, ui_font(12), 0);
     lv_obj_set_pos(lbl_m, 76, 38);
 
     // Minute roller (steps of 5)
@@ -302,7 +303,7 @@ void setup_alarme_screen() {
     // Switch state label
     lbl_sw_state = lv_label_create(lv_scr_act());
     lv_obj_set_pos(lbl_sw_state, 58, 172);
-    lv_obj_set_style_text_font(lbl_sw_state, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(lbl_sw_state, ui_font(12), 0);
     lv_label_set_text(lbl_sw_state, userConfig.alarm_on ? LV_SYMBOL_BELL " ON" : LV_SYMBOL_BELL " OFF");
     lv_obj_set_style_text_color(lbl_sw_state,
         userConfig.alarm_on ? lv_palette_main(LV_PALETTE_GREEN) : currentTheme->text_muted, 0);
@@ -319,7 +320,7 @@ void setup_alarme_screen() {
     lv_obj_t* lbl_mode = lv_label_create(lv_scr_act());
     lv_label_set_text_fmt(lbl_mode, "%s :", lang->alarm_mode);
     lv_obj_set_style_text_color(lbl_mode, currentTheme->text_muted, 0);
-    lv_obj_set_style_text_font(lbl_mode, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(lbl_mode, ui_font(12), 0);
     lv_obj_set_pos(lbl_mode, 142, 40);
 
     // Mode checkboxes (mutually exclusive — managed by cb_mode_event_cb)
@@ -328,7 +329,7 @@ void setup_alarme_screen() {
         lv_checkbox_set_text(cb, txt);
         lv_obj_set_pos(cb, 142, y);
         lv_obj_set_style_text_color(cb, currentTheme->text_main, 0);
-        lv_obj_set_style_text_font(cb, &lv_font_montserrat_12, 0);
+        lv_obj_set_style_text_font(cb, ui_font(12), 0);
         lv_obj_set_style_bg_color(cb, currentTheme->primary, LV_PART_INDICATOR | LV_STATE_CHECKED);
         lv_obj_add_event_cb(cb, cb_mode_event_cb, LV_EVENT_CLICKED, NULL);
         return cb;
@@ -351,7 +352,7 @@ void setup_alarme_screen() {
     lv_obj_set_style_border_width(station_list, 1, 0);
     lv_obj_set_style_border_color(station_list, currentTheme->border, 0);
     lv_obj_set_style_bg_color(station_list, currentTheme->btn_core, 0);
-    lv_obj_set_style_text_font(station_list, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(station_list, ui_font(12), 0);
     lv_obj_set_style_pad_row(station_list, 1, 0);
 
     for (int i = 0; i < (int)STATIONS.size(); i++) {
@@ -360,7 +361,7 @@ void setup_alarme_screen() {
         lv_obj_set_style_bg_color(btn, currentTheme->btn_core, 0);
         lv_obj_set_style_text_color(btn, currentTheme->text_main, 0);
         lv_obj_set_style_min_height(btn, 24, 0);
-        lv_obj_set_style_text_font(btn, &lv_font_montserrat_12, 0);
+        lv_obj_set_style_text_font(btn, ui_font(12), 0);
         lv_obj_set_user_data(btn, (void*)(intptr_t)i);
         lv_obj_add_event_cb(btn, station_alarm_cb, LV_EVENT_CLICKED, NULL);
     }
@@ -378,6 +379,6 @@ void setup_alarme_screen() {
     lv_obj_t* lbl_back = lv_label_create(btn_back);
     lv_label_set_text_fmt(lbl_back, "%s %s", LV_SYMBOL_OK, lang->alarm_validate);
     lv_obj_set_style_text_color(lbl_back, currentTheme->bg_color, 0);
-    lv_obj_set_style_text_font(lbl_back, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl_back, ui_font(14), 0);
     lv_obj_center(lbl_back);
 }
