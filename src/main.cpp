@@ -150,7 +150,7 @@ void setDefaultConfig() {
     userConfig.eq_mid = 1;
     userConfig.eq_treble = 2;
     userConfig.selected_theme = 0;
-    userConfig.language = 0;
+    userConfig.language = LANG_EN;
     // ===== INITIALISATION DU FUSEAU HORAIRE PAR DEFAUT =====
     // On nettoie d'abord la memoire du tableau pour etre super propre
     memset(userConfig.timezone, 0, sizeof(userConfig.timezone));

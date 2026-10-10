@@ -394,6 +394,71 @@ static const LangStrings lang_pt = {
     .err_stream     = "Erro de stream",
 };
 
+// ----- THAI -----
+static const LangStrings lang_th = {
+    .lang_name      = "ไทย",
+    .days           = {"อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"},
+    .months         = {"มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
+                       "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"},
+    .radio_title    = "วิทยุออนไลน์",
+    .mp3_select_file= "-- เลือกไฟล์ --",
+    .mp3_no_file    = "ไม่พบ MP3",
+    .mp3_create_folder = "สร้างโฟลเดอร์ /mp3",
+    .mp3_err_sd     = "! SD ผิดพลาด",
+    .config_title      = "ตั้งค่า",
+    .config_brightness = "ความสว่าง",
+    .config_volume     = "เสียง",
+    .config_btn_wifi   = "WiFi",
+    .config_btn_alarm  = "ปลุก",
+    .config_btn_leds   = "LED",
+    .config_btn_eq     = "EQ",
+    .config_btn_themes = "ธีม",
+    .config_btn_tz     = "โซนเวลา",
+    .config_btn_lang   = "ภาษา",
+    .config_btn_info   = "ข้อมูล",
+    .wifi_title     = "จัดการ WiFi",
+    .wifi_back      = "กลับ",
+    .wifi_scan      = "สแกน",
+    .wifi_saved     = "เครือข่ายที่จำไว้",
+    .wifi_connected = "เชื่อมต่อแล้ว",
+    .wifi_lost      = "WiFi หลุด...",
+    .wifi_scanning  = "กำลังสแกน...",
+    .wifi_available = "เครือข่ายที่พบ",
+    .wifi_no_saved  = "ยังไม่มีเครือข่ายที่จำไว้\nใช้สแกนเพื่อเพิ่ม",
+    .wifi_no_network= "ไม่พบเครือข่าย",
+    .wifi_pwd_placeholder = "รหัสผ่าน WiFi...",
+    .alarm_title    = "ตั้งปลุก",
+    .alarm_mode     = "โหมด",
+    .alarm_validate = "ตกลง",
+    .led_title      = "ตั้งค่า LED",
+    .led_fixed      = "ค้าง",
+    .led_rainbow    = "รุ้ง",
+    .led_wave       = "คลื่น",
+    .led_pulse      = "กะพริบ",
+    .led_validate   = "ตกลง",
+    .eq_title       = "อีควอไลเซอร์",
+    .eq_bass        = "เบส",
+    .eq_mid         = "กลาง",
+    .eq_treble      = "แหลม",
+    .eq_validate    = "OK",
+    .theme_title    = "ธีม",
+    .theme_validate = "ตกลง",
+    .tz_title       = "โซนเวลา",
+    .tz_validate    = "ตกลง",
+    .lang_title     = "ภาษา",
+    .lang_validate  = "ตกลง",
+    .info_title     = "ข้อมูลระบบ",
+    .info_signal    = "สัญญาณ",
+    .info_sd        = "พื้นที่ SD",
+    .info_temp      = "อุณหภูมิ CPU",
+    .led_brightness = "ความสว่าง LED",
+    .led_color_preview = "สี",
+    .err_no_wifi    = "ไม่มี WiFi",
+    .err_no_sd      = "ไม่มีการ์ด SD",
+    .err_no_rtc     = "ไม่พบ RTC",
+    .err_stream     = "สตรีมผิดพลาด",
+};
+
 // =====================================================
 //  Table de dispatch
 // =====================================================
@@ -404,6 +469,7 @@ static const LangStrings* lang_table[LANG_COUNT] = {
     &lang_it,   // LANG_IT = 3
     &lang_de,   // LANG_DE = 4
     &lang_pt,   // LANG_PT = 5
+    &lang_th,   // LANG_TH = 6
 };
 
 const char* lang_names[LANG_COUNT] = {
@@ -413,13 +479,14 @@ const char* lang_names[LANG_COUNT] = {
     "Italien",
     "Allemand",
     "Portugais",
+    "ไทย",
 };
 
 // Pointeur global utilise partout dans l'UI
-const LangStrings* lang = &lang_fr;
+const LangStrings* lang = &lang_en;
 
 void apply_language(int lang_id) {
-    if (lang_id < 0 || lang_id >= LANG_COUNT) lang_id = LANG_FR;
+    if (lang_id < 0 || lang_id >= LANG_COUNT) lang_id = LANG_EN;
     lang = lang_table[lang_id];
     Serial.printf("[LANG] Langue appliquee : %s\n", lang->lang_name);
 }

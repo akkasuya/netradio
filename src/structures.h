@@ -17,7 +17,7 @@ struct WifiNetwork {
 
 // Config format marker. Bump when Config layout OR fresh-install defaults
 // change; loadConfig() resets stale blobs instead of misreading them.
-#define NETRADIO_CONFIG_MAGIC 0x4E523032  // "NR02" (NR01: vol default 10)
+#define NETRADIO_CONFIG_MAGIC 0x4E523033  // "NR03" (NR02: lang default FR, NR01: vol default 10)
 
 // Persistent configuration — saved to LittleFS as /config.bin
 struct Config {
@@ -38,7 +38,7 @@ struct Config {
     int     eq_treble       = 0;   // Equalizer treble(-10..+6 dB)
     int     selected_theme  = 0;   // Index into listeThemes[]
     char    timezone[64];          // POSIX TZ string (e.g. "ICT-7")
-    uint8_t language        = 0;   // LangID (see ui_lang.h)
+    uint8_t language        = 1;   // LangID (see ui_lang.h), default English
 };
 
 // One radio station entry (loaded from /radios.json)

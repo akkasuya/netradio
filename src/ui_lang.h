@@ -23,6 +23,7 @@ enum LangID {
     LANG_IT = 3,  // Italiano
     LANG_DE = 4,  // Deutsch
     LANG_PT = 5,  // Portugais
+    LANG_TH = 6,  // ไทย
     LANG_COUNT    // always last — used for array sizing
 };
 
