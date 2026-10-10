@@ -130,6 +130,7 @@ void refresh_saved_wifi_list() {
         // WiFi icon (green if connected)
         lv_obj_t* ico = lv_label_create(row);
         lv_label_set_text(ico, LV_SYMBOL_WIFI);
+        lv_obj_set_style_text_font(ico, ui_font(14), 0);
         lv_obj_set_style_text_color(ico,
             is_connected ? lv_palette_main(LV_PALETTE_GREEN) : currentTheme->text_muted, 0);
         lv_obj_align(ico, LV_ALIGN_LEFT_MID, 0, 0);
@@ -177,6 +178,7 @@ void start_wifi_scan() {
     // Show "Scanning..." while scan runs
     lv_obj_t* scanning = lv_label_create(ui_scan_list);
     lv_label_set_text_fmt(scanning, "%s  %s", LV_SYMBOL_REFRESH, lang->wifi_scanning);
+    lv_obj_set_style_text_font(scanning, ui_font(12), 0);
     lv_obj_set_style_text_color(scanning, currentTheme->text_muted, 0);
     lv_obj_align(scanning, LV_ALIGN_CENTER, 0, 0);
     lv_timer_handler();
@@ -190,6 +192,7 @@ void start_wifi_scan() {
     if (n == 0) {
         lv_obj_t* lbl = lv_label_create(ui_scan_list);
         lv_label_set_text(lbl, lang->wifi_no_network);
+    lv_obj_set_style_text_font(lbl, ui_font(12), 0);
         lv_obj_set_style_text_color(lbl, currentTheme->text_muted, 0);
         lv_obj_align(lbl, LV_ALIGN_CENTER, 0, 0);
     } else {
@@ -217,6 +220,7 @@ void start_wifi_scan() {
 
             lv_obj_t* ico = lv_label_create(row);
             lv_label_set_text(ico, LV_SYMBOL_WIFI);
+            lv_obj_set_style_text_font(ico, ui_font(14), 0);
             lv_obj_set_style_text_color(ico, sig_color, 0);
             lv_obj_align(ico, LV_ALIGN_LEFT_MID, 0, 0);
 
@@ -320,6 +324,7 @@ void setup_wifi_screen() {
 
     lv_obj_t* title = lv_label_create(header);
     lv_label_set_text_fmt(title, "%s %s", LV_SYMBOL_WIFI, lang->wifi_title);
+    lv_obj_set_style_text_font(title, ui_font(14), 0);
     lv_obj_set_style_text_color(title, currentTheme->primary, 0);
     lv_obj_align(title, LV_ALIGN_LEFT_MID, 4, 0);
 
@@ -331,6 +336,7 @@ void setup_wifi_screen() {
     lv_obj_add_event_cb(btn_back, btn_back_cb, LV_EVENT_CLICKED, NULL);
     lv_obj_t* lbl_back = lv_label_create(btn_back);
     lv_label_set_text(lbl_back, lang->wifi_back);
+    lv_obj_set_style_text_font(lbl_back, ui_font(14), 0);
     lv_obj_set_style_text_color(lbl_back, currentTheme->bg_color, 0);
     lv_obj_center(lbl_back);
 
@@ -521,6 +527,7 @@ void setup_wifi_screen() {
 
     ui_pwd_eye_lbl = lv_label_create(btn_eye);
     lv_label_set_text(ui_pwd_eye_lbl, LV_SYMBOL_EYE_CLOSE);
+    lv_obj_set_style_text_font(ui_pwd_eye_lbl, ui_font(14), 0);
     lv_obj_set_style_text_color(ui_pwd_eye_lbl, currentTheme->text_muted, 0);
     lv_obj_center(ui_pwd_eye_lbl);
 

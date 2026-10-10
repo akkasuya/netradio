@@ -42,11 +42,13 @@ static void create_info_row(lv_obj_t* parent,
 
     lv_obj_t* lbl = lv_label_create(row);
     lv_label_set_text_fmt(lbl, "%s  %s", symbol, label);
+    lv_obj_set_style_text_font(lbl, ui_font(14), 0);
     lv_obj_set_style_text_color(lbl, currentTheme->text_main, 0);
     lv_obj_align(lbl, LV_ALIGN_LEFT_MID, 0, 0);
 
     lv_obj_t* val = lv_label_create(row);
     lv_label_set_text(val, value);
+    lv_obj_set_style_text_font(val, ui_font(14), 0);
     lv_obj_set_style_text_color(val, currentTheme->primary, 0);
     lv_obj_align(val, LV_ALIGN_RIGHT_MID, 0, 0);
 }
@@ -77,6 +79,7 @@ void setup_info_screen() {
     // --- Title ---
     lv_obj_t* title = lv_label_create(lv_scr_act());
     lv_label_set_text(title, lang->info_title);
+    lv_obj_set_style_text_font(title, ui_font(16), 0);
     lv_obj_set_style_text_color(title, currentTheme->primary, 0);
     lv_obj_align(title, LV_ALIGN_TOP_MID, 0, 10);
 
@@ -163,5 +166,6 @@ void setup_info_screen() {
     lv_obj_add_event_cb(btn_back, btn_back_cb, LV_EVENT_CLICKED, NULL);
     lv_obj_t* lbl_back = lv_label_create(btn_back);
     lv_label_set_text(lbl_back, lang->wifi_back);
+    lv_obj_set_style_text_font(lbl_back, ui_font(14), 0);
     lv_obj_center(lbl_back);
 }

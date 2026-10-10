@@ -223,6 +223,7 @@ void setup_config_screen() {
     lv_obj_add_event_cb(btn_home, back_to_home_cb, LV_EVENT_CLICKED, NULL);
     lv_obj_t* lbl_home = lv_label_create(btn_home);
     lv_label_set_text(lbl_home, LV_SYMBOL_HOME);
+    lv_obj_set_style_text_font(lbl_home, ui_font(14), 0);
     lv_obj_set_style_text_color(lbl_home, currentTheme->bg_color, 0);
     lv_obj_center(lbl_home);
 

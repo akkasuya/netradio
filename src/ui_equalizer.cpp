@@ -117,6 +117,7 @@ void setup_equalizer_screen() {
 
     lv_obj_t* title = lv_label_create(header);
     lv_label_set_text_fmt(title, "%s  %s", LV_SYMBOL_VOLUME_MAX, lang->eq_title);
+    lv_obj_set_style_text_font(title, ui_font(14), 0);
     lv_obj_set_style_text_color(title, currentTheme->primary, 0);
     lv_obj_align(title, LV_ALIGN_LEFT_MID, 4, 0);
 
@@ -129,6 +130,7 @@ void setup_equalizer_screen() {
     lv_obj_add_event_cb(btn_ok, btn_back_cb, LV_EVENT_CLICKED, NULL);
     lv_obj_t* lbl_ok = lv_label_create(btn_ok);
     lv_label_set_text(lbl_ok, lang->eq_validate);
+    lv_obj_set_style_text_font(lbl_ok, ui_font(14), 0);
     lv_obj_set_style_text_color(lbl_ok, currentTheme->bg_color, 0);
     lv_obj_center(lbl_ok);
 

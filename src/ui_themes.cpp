@@ -101,6 +101,7 @@ void setup_themes_screen() {
 
     lv_obj_t* title = lv_label_create(header);
     lv_label_set_text_fmt(title, "%s  %s", LV_SYMBOL_IMAGE, lang->theme_title);
+    lv_obj_set_style_text_font(title, ui_font(14), 0);
     lv_obj_set_style_text_color(title, currentTheme->primary, 0);
     lv_obj_align(title, LV_ALIGN_LEFT_MID, 4, 0);
 
@@ -112,6 +113,7 @@ void setup_themes_screen() {
     lv_obj_add_event_cb(btn_back, btn_back_cb, LV_EVENT_CLICKED, NULL);
     lv_obj_t* lbl_back = lv_label_create(btn_back);
     lv_label_set_text(lbl_back, lang->theme_validate);
+    lv_obj_set_style_text_font(lbl_back, ui_font(14), 0);
     lv_obj_set_style_text_color(lbl_back, currentTheme->bg_color, 0);
     lv_obj_center(lbl_back);
 

@@ -86,6 +86,7 @@ void setup_traduction_screen() {
 
     lv_obj_t* title = lv_label_create(header);
     lv_label_set_text(title, lang->lang_title);
+    lv_obj_set_style_text_font(title, ui_font(14), 0);
     lv_obj_set_style_text_color(title, currentTheme->primary, 0);
     lv_obj_align(title, LV_ALIGN_TOP_LEFT, 4, 2);
 
@@ -105,6 +106,7 @@ void setup_traduction_screen() {
     lv_obj_add_event_cb(btn_back, btn_back_cb, LV_EVENT_CLICKED, NULL);
     lv_obj_t* lbl_back = lv_label_create(btn_back);
     lv_label_set_text(lbl_back, lang->lang_validate);
+    lv_obj_set_style_text_font(lbl_back, ui_font(14), 0);
     lv_obj_set_style_text_color(lbl_back, currentTheme->bg_color, 0);
     lv_obj_center(lbl_back);
 
@@ -133,6 +135,7 @@ void setup_traduction_screen() {
         // Checkmark icon on selected language
         lv_obj_t* ico = lv_label_create(btn);
         lv_label_set_text(ico, selected ? LV_SYMBOL_OK : " ");
+    lv_obj_set_style_text_font(ico, ui_font(14), 0);
         lv_obj_set_style_text_color(ico,
             selected ? currentTheme->bg_color : currentTheme->text_muted, 0);
         lv_obj_align(ico, LV_ALIGN_LEFT_MID, 8, 0);
@@ -140,6 +143,7 @@ void setup_traduction_screen() {
         // Language name
         lv_obj_t* lbl = lv_label_create(btn);
         lv_label_set_text(lbl, lang_names[i]);
+    lv_obj_set_style_text_font(lbl, ui_font(14), 0);
         lv_obj_set_style_text_color(lbl,
             selected ? currentTheme->bg_color : currentTheme->text_main, 0);
         lv_obj_align(lbl, LV_ALIGN_LEFT_MID, 36, 0);
